@@ -15,7 +15,7 @@ function sleep(ms: number) {
 
 async function calcNetProfit(profitWei: BigNumber, address: string, baseTokens: Tokens): Promise<number> {
   let price = 1;
-  if (baseTokens.wbnb.address == address) {
+  if (baseTokens.wFTM.address == address) {
     price = await getBnbPrice();
   }
   let profit = parseFloat(ethers.utils.formatEther(profitWei));
@@ -59,7 +59,8 @@ function arbitrageFunc(flashBot: FlashBot, baseTokens: Tokens) {
           const receipt = await response.wait(1);
           log.info(`Tx: ${receipt.transactionHash}`);
         });
-      } catch (err) {
+      } 
+      catch (err: any) {
         if (err.message === 'Too much pending tasks' || err.message === 'async-lock timed out') {
           return;
         }
